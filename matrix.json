@@ -1,0 +1,9 @@
+{
+  "name": "ddrt_flask",
+  "image": "docker.neg/dfis/python_general:0.0.2",
+  "tag": "0.0.1",
+  "port": [8080],
+  "env": {"ENV":"development"},
+  "volume": [],
+  "cmd": [ "python", "run.py"]
+}
