@@ -1,8 +1,4 @@
-from flask_sqlalchemy import SQLAlchemy
-from app.main import main
-
-main.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@10.16.76.245:3306/ddrt_jira_dev'
-db = SQLAlchemy(main)
+from app import db
 
 
 class users(db.Model):

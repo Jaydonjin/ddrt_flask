@@ -2,6 +2,7 @@ from flask import render_template, request
 import requests
 from app.main import main
 import json
+import ast
 from ..db.db_controller import get_userId_by_email
 
 
@@ -14,7 +15,7 @@ def index():
 def jira_login():
     username = request.form['username']
     password = request.form['password']
-    body = {"username": username, "password": password}
+    body = {"username": 'jj51', "password": 'newegg@123'}
     headers = {'Content-Type': 'application/json'}
     address = 'http://jira/rest/auth/1/session'
     response = requests.post(address, headers=headers, data=json.dumps(body))
@@ -24,7 +25,8 @@ def jira_login():
     print cookies
     login_info(cookies)
     userInfo = user_info(username, cookies)
-    user_email = userInfo['emailAddress']
+    user_email = json.loads(userInfo)['emailAddress']
+    print user_email
     print get_userId_by_email(user_email)
 
 

@@ -5,9 +5,13 @@
 from flask import Flask
 from nlog import NLog
 
+from flask_sqlalchemy import SQLAlchemy
+
 
 __version__ = '0.0.1'
 __author__ = 'DAE'
+
+db = SQLAlchemy()
 
 
 def create_app(config_name):
@@ -18,6 +22,7 @@ def create_app(config_name):
     app.config['VERSION'] = __version__
     project_env = "gdev" if config_name_lower == 'development' else config_name_lower
 
+    db.init_app(app)
     NLog("ddrt_flask",
          logger=app.logger,
          level=app.config.get('LOG_LEVEL', 'info'),
