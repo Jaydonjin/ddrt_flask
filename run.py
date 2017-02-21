@@ -18,7 +18,7 @@ if __name__ == '__main__':
     app.logger.info('demo listening %s:%s', app.config['HTTP_HOST'], app.config['HTTP_PORT'])
 
     if app.config.get('DEBUG', False):
-        app.run(app.config['HTTP_HOST'], app.config['HTTP_PORT'], debug=False)
+        app.run(app.config['HTTP_HOST'], app.config['HTTP_PORT'], debug=True)
     else:
         WSGIServer((app.config['HTTP_HOST'], app.config['HTTP_PORT']), application=app,
                    log=None).serve_forever()
