@@ -11,4 +11,4 @@ LOG_ENABLE_CONSOLE = True
 LOG_ENABLE_BTS = True
 
 # DB Settings
-SQLALCHEMY_DATABASE_URI = 'mysql+mysqldb://root:root@10.16.76.245:3306/ddrt_jira_dev'
+SQLALCHEMY_DATABASE_URI = 'mysql://root:root@10.16.76.245:3306/ddrt_jira_dev'
