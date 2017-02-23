@@ -502,7 +502,7 @@ var sendDelete = function(url, headers, success_call) {
 };
 
 var initUser = function() {
-    return sendAjax("/api/v1/jira/user",
+    return sendAjax("/ddrt/api/v1/jira/user",
         function() {
             showLoading("Check login, please waiting...");
         }, setUser, false);

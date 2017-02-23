@@ -1,5 +1,6 @@
 from db import users, groups_users, groups, domains, history_issues, reports
 from app import db
+import db_utils
 import datetime
 
 
@@ -34,7 +35,8 @@ def get_domain_name_by_id(domain_id):
 
 
 def get_history_issues_by_user_id(user_id):
-    item = db.session.query(history_issues).filter(history_issues.user_id == user_id).first()
+    items = db.session.query(history_issues).filter(history_issues.user_id == user_id).all()
+    item = db_utils.get_history_issue(items)
     issue_key = item.issue_key
     return issue_key
 
@@ -48,5 +50,7 @@ def get_report_by_user(user_id, day_num):
     print ('start :', start, ' end :', end)
     item = db.session.query(reports).filter(reports.user_id == user_id).filter(reports.date >= start).filter(
         reports.date < end).first()
-    print item.content, item.date
-    return item
+    if item:
+        return item
+    else:
+        return None
