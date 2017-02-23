@@ -54,20 +54,23 @@ def jira_login():
 
 @main.route("/api/v1/jira/user", methods=['GET'])
 def login_again():
-    cookies = utils.make_cookie(request.cookies['JSESSIONID'], request.cookies['atlassian.xsrf.token'])
-    user = utils.user_info(request.cookies['username'], cookies)
-    user = json.loads(user)
-    user_email = user['emailAddress']
-    user_id = get_user_id_by_email(user_email)
-    group_id = get_group_id_by_user_id(user_id)
-    domain_id = get_domain_id_by_user_id(user_id)
-    group_name = get_group_name_by_id(group_id)
-    domain_name = get_domain_name_by_id(domain_id)
-    user['userId'] = user_id
-    user['groupName'] = group_name
-    user['domainName'] = domain_name
-    user = json.dumps(user)
-    return user, 200
+    if request.cookies:
+        cookies = utils.make_cookie(request.cookies['JSESSIONID'], request.cookies['atlassian.xsrf.token'])
+        user = utils.user_info(request.cookies['username'], cookies)
+        user = json.loads(user)
+        user_email = user['emailAddress']
+        user_id = get_user_id_by_email(user_email)
+        group_id = get_group_id_by_user_id(user_id)
+        domain_id = get_domain_id_by_user_id(user_id)
+        group_name = get_group_name_by_id(group_id)
+        domain_name = get_domain_name_by_id(domain_id)
+        user['userId'] = user_id
+        user['groupName'] = group_name
+        user['domainName'] = domain_name
+        user = json.dumps(user)
+        return user, 200
+    else:
+        return '', 404
 
 
 @main.route('/api/v1/report/user/<user_id>/<day_num>')

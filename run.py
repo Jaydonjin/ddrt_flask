@@ -14,7 +14,6 @@ if __name__ == '__main__':
     ENV_NAME = 'ENV'
 
     app = create_app(os.environ.get(ENV_NAME, 'development'))
-
     app.logger.info('demo listening %s:%s', app.config['HTTP_HOST'], app.config['HTTP_PORT'])
 
     if app.config.get('DEBUG', False):
