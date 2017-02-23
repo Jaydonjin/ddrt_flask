@@ -1,5 +1,7 @@
-import requests, json
-from ..db.db_controller import *
+import requests
+import json
+from flask import request
+from app.main.db.db_controller import *
 
 
 def login_info(cookie):
@@ -29,6 +31,26 @@ def report_date(user_id, day_num):
     return body, 200
 
 
-def make_cookie(jsessionid, token):
+def make_request_cookie():
+    jsessionid = request.cookies['JSESSIONID']
+    token = request.cookies['atlassian.xsrf.token']
     cookies = ''.join(['JSESSIONID=', jsessionid, ';atlassian.xsrf.token=', token])
     return cookies
+
+
+def make_response_cookie(jsessionid, token):
+    cookies = ''.join(['JSESSIONID=', jsessionid, ';atlassian.xsrf.token=', token])
+    return cookies
+
+
+def make_user_info(user):
+    user_email = user['emailAddress']
+    user_id = get_user_id_by_email(user_email)
+    group_id = get_group_id_by_user_id(user_id)
+    domain_id = get_domain_id_by_user_id(user_id)
+    group_name = get_group_name_by_id(group_id)
+    domain_name = get_domain_name_by_id(domain_id)
+    user['userId'] = user_id
+    user['groupName'] = group_name
+    user['domainName'] = domain_name
+    return user
