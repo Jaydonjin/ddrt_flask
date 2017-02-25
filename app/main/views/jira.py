@@ -95,6 +95,12 @@ def update_reports(update_list, user_id, login_id, user_name, date_time):
         return update_response
 
 
+def delete_reports(delete_list, user_id):
+    for issue in delete_list:
+        issue_id = issue['key']
+        log_id = issue['id']
+
+
 def work_log(create_obj):
     cookies = utils.make_request_cookie()
     headers = {"content-type": "application/json", "Cookie": cookies}
@@ -114,3 +120,10 @@ def edit_log(update_obj):
     del update_obj['key']
     result = requests.put(url, headers=headers, json=update_obj)
     return result
+
+
+def delete_log(issue_id, log_id):
+    cookies = utils.make_request_cookie()
+    headers = {"Cookies": cookies}
+    url = 'http://jira/rest/api/2/issue/%s/worklog/%s' % (issue_id, log_id)
+    pass
