@@ -19,12 +19,11 @@ def user_info(user, cookie):
 
 
 def report_date(user_id, day_num):
-    cur_report = get_report_by_user(user_id, day_num)
-    if cur_report:
-        body = [{'content': cur_report.content, 'date': cur_report.date.strftime("%Y-%m-%d %H:%M:%S"),
-                 'issue': cur_report.issue_name,
-                 'timeSpent': cur_report.time_spent, 'userid': cur_report.user_id, 'worklogId': cur_report.worklog_id}]
+    data = get_report_by_user(user_id, day_num)
+    if data:
+        body = make_report_data(data)
         body = json.dumps(body)
+        print body
     else:
         body = []
         body = json.dumps(body)
@@ -54,3 +53,20 @@ def make_user_info(user):
     user['groupName'] = group_name
     user['domainName'] = domain_name
     return user
+
+
+def make_report_data(data):
+    result_list = []
+    for cur_report in data:
+        tmp_report = {'content': cur_report.content, 'date': cur_report.date.strftime("%Y-%m-%d %H:%M:%S"),
+                      'issue': cur_report.issue_name,
+                      'timeSpent': cur_report.time_spent, 'userid': cur_report.user_id,
+                      'worklogId': cur_report.worklog_id}
+        result_list.append(tmp_report)
+    return result_list
+
+
+def joint_list(list1, list2):
+    for item in list2:
+        list1.append(item)
+    return list1

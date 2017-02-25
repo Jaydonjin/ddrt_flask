@@ -45,3 +45,8 @@ class reports(db.Model):
     time_spent = db.Column(db.String(45))
     issue_name = db.Column(db.String(45))
     worklog_id = db.Column(db.Integer)
+
+    def get_dict(self):
+        dct = self.__dict__
+        del dct['_sa_instance_state']
+        return dct

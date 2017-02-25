@@ -60,9 +60,8 @@ def report(user_id, day_num):
 
 @main.route('/api/v1/issue/prev/<user_id>')
 def history_issues(user_id):
-    issue = get_history_issues_by_user_id(user_id)
-    body = [{'issue': issue, 'user_id': user_id}]
-    body = json.dumps(body)
+    issue_list = get_history_issues_by_user_id(user_id)
+    body = json.dumps(issue_list)
     response = Response(body, status=200)
     return response
 
@@ -81,3 +80,9 @@ def project():
     address = "http://jira/rest/api/2/project"
     response = requests.get(address, headers=headers)
     return response.content, response.status_code
+
+
+@main.route('/api/v1/jira/worklog', methods=['POST'])
+def work_log():
+    playload = request.get_json(True)
+    return jira.jira_work_log(playload)
