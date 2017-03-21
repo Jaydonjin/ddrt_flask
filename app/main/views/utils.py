@@ -31,10 +31,13 @@ def report_date(user_id, day_num):
 
 
 def make_request_cookie():
-    jsessionid = request.cookies['JSESSIONID']
-    token = request.cookies['atlassian.xsrf.token']
-    cookies = ''.join(['JSESSIONID=', jsessionid, ';atlassian.xsrf.token=', token])
-    return cookies
+    if 'JSESSIONID' in request.cookies.keys() and 'atlassian.xsrf.token' in request.cookies.keys():
+        jsessionid = request.cookies['JSESSIONID']
+        token = request.cookies['atlassian.xsrf.token']
+        cookies = ''.join(['JSESSIONID=', jsessionid, ';atlassian.xsrf.token=', token])
+        return cookies
+    else:
+        return None
 
 
 def make_response_cookie(jsessionid, token):

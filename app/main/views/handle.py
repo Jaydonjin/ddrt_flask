@@ -44,11 +44,14 @@ def jira_login_handler():
 def login_again():
     if request.cookies:
         cookies = utils.make_request_cookie()
-        user = utils.user_info(request.cookies['username'], cookies)
-        user = utils.make_user_info(json.loads(user))
-        user = json.dumps(user)
-        response = Response(user, status=200)
-        return response
+        if cookies:
+            user = utils.user_info(request.cookies['username'], cookies)
+            user = utils.make_user_info(json.loads(user))
+            user = json.dumps(user)
+            response = Response(user, status=200)
+            return response
+        else:
+            return '', 404
     else:
         return '', 404
 

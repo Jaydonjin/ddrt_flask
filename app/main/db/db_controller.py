@@ -35,7 +35,7 @@ def get_domain_name_by_id(domain_id):
 
 
 def get_history_issues_by_user_id(user_id):
-    max_day_num = db.session.query(db.func.max(history_issues.day_num)).scalar()
+    max_day_num = db.session.query(db.func.max(history_issues.day_num)).filter(history_issues.user_id == user_id)
     items = db.session.query(history_issues).filter(history_issues.user_id == user_id).filter(
         history_issues.day_num == max_day_num).all()
     item_list = []
